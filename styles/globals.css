@@ -20,3 +20,7 @@ a {
 .imageMainLoading {
   animation: breath 2s linear infinite;
 }
+
+.ReactTable {
+  margin: 1rem 20rem;
+}
