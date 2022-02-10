@@ -7,17 +7,33 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: '500',
   },
   resultAcc: {
-    color: theme.palette.secondary.grey,
-    fontWeight: '500',
+    color: 'black',
+    fontWeight: '600',
   },
   resultTime: {
-    color: theme.palette.secondary.grey,
-    fontWeight: '500',
+    color: 'black',
+    fontWeight: '600',
   },
 }));
 
-const ModelResult = () => {
+const ModelResult = (props) => {
+  const { result } = props;
   const classes = useStyles();
+
+  const formatAccuracy = (accuracy) => {
+    if (accuracy) {
+      return `${accuracy}%`;
+    }
+    return '';
+  };
+
+  const fromatTime = (time) => {
+    if (time) {
+      return `(${time})`;
+    }
+    return '';
+  };
+
   return (
     <Box>
       <Box mt={2}>
@@ -27,7 +43,7 @@ const ModelResult = () => {
           </Grid>
           <Grid item xs={6}>
             <Box style={{ textAlign: 'right' }}>
-              <Typography className={classes.resultAcc}>80.12% <span className={classes.resultTime}>(3m, 27d)</span></Typography>
+              <Typography className={classes.resultAcc}>{formatAccuracy(result.tfidf_unigram_acc)} <span className={classes.resultTime}>{fromatTime(result.tfidf_unigram_time)}</span></Typography>
             </Box>
           </Grid>
         </Grid>
@@ -39,7 +55,7 @@ const ModelResult = () => {
           </Grid>
           <Grid item xs={6}>
             <Box style={{ textAlign: 'right' }}>
-              <Typography>-</Typography>
+              <Typography className={classes.resultAcc}>{formatAccuracy(result.tfidf_bigram_acc)} <span className={classes.resultTime}>{fromatTime(result.tfidf_bigram_time)}</span></Typography>
             </Box>
           </Grid>
         </Grid>
@@ -51,7 +67,7 @@ const ModelResult = () => {
           </Grid>
           <Grid item xs={6}>
             <Box style={{ textAlign: 'right' }}>
-              <Typography>-</Typography>
+              <Typography className={classes.resultAcc}>{formatAccuracy(result.tfidf_trigram_acc)} <span className={classes.resultTime}>{fromatTime(result.tfidf_trigram_time)}</span></Typography>
             </Box>
           </Grid>
         </Grid>

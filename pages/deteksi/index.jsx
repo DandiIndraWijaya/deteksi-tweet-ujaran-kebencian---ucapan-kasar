@@ -62,6 +62,38 @@ const Deteksi = () => {
   const [transition2, setTransition2] = useState(false);
   const [transition3, setTransition3] = useState(false);
   const [svmLoading, setSvmLoading] = useState(false);
+  const [svmFeatureExtraction, setSvmFeatureExtraction] = useState('unigram');
+  const [rfFeatureExtraction, setRfFeatureExtraction] = useState('unigram');
+  const [vcFeatureExtraction, setVcFeatrueExtraction] = useState('unigram');
+  const [result, setResult] = useState({
+    svm: {
+      tfidf_unigram_acc: '80',
+      tfidf_bigram_acc: '',
+      tfidf_trigram_acc: '',
+      tfidf_unigram_time: '05:40',
+      tfidf_bigram_time: '',
+      tfidf_trigram_time: '',
+      updated_at: '',
+    },
+    rf: {
+      tfidf_unigram_acc: '',
+      tfidf_bigram_acc: '90',
+      tfidf_trigram_acc: '',
+      tfidf_unigram_time: '',
+      tfidf_bigram_time: '08:48',
+      tfidf_trigram_time: '',
+      updated_at: '',
+    },
+    vc: {
+      tfidf_unigram_acc: '',
+      tfidf_bigram_acc: '',
+      tfidf_trigram_acc: '96.90',
+      tfidf_unigram_time: '',
+      tfidf_bigram_time: '',
+      tfidf_trigram_time: '10:19',
+      updated_at: '',
+    },
+  });
   const classes = useStyles();
 
   useEffect(() => {
@@ -74,6 +106,19 @@ const Deteksi = () => {
     setSvmLoading(true);
     setTimeout(() => setSvmLoading(false), 2000);
   };
+
+  const onChangeSvmRadio = (e) => {
+    setSvmFeatureExtraction(e.target.value);
+  };
+
+  const onChangeRfRadio = (e) => {
+    setRfFeatureExtraction(e.target.value);
+  };
+
+  const onChangeVcRadio = (e) => {
+    setVcFeatrueExtraction(e.target.value);
+  };
+
   return (
     <Layout>
       <Container>
@@ -99,7 +144,11 @@ const Deteksi = () => {
                         </Grid>
                         <Grid item xs={6}>
                           <Box style={{ textAlign: 'right' }}>
-                            <Radio />
+                            <Radio
+                              value="unigram"
+                              checked={svmFeatureExtraction === 'unigram'}
+                              onChange={onChangeSvmRadio}
+                            />
                           </Box>
                         </Grid>
                       </Grid>
@@ -110,7 +159,11 @@ const Deteksi = () => {
                           </Grid>
                           <Grid item xs={6}>
                             <Box style={{ textAlign: 'right' }}>
-                              <Radio value={false} />
+                              <Radio
+                                value="bigram"
+                                checked={svmFeatureExtraction === 'bigram'}
+                                onChange={onChangeSvmRadio}
+                              />
                             </Box>
                           </Grid>
                         </Grid>
@@ -122,7 +175,11 @@ const Deteksi = () => {
                           </Grid>
                           <Grid item xs={6}>
                             <Box style={{ textAlign: 'right' }}>
-                              <Radio value={false} />
+                              <Radio
+                                value="trigram"
+                                checked={svmFeatureExtraction === 'trigram'}
+                                onChange={onChangeSvmRadio}
+                              />
                             </Box>
                           </Grid>
                         </Grid>
@@ -152,7 +209,7 @@ const Deteksi = () => {
                         </Grid>
                       </Grid>
                     </Box>
-                    <ModelResult />
+                    <ModelResult result={result.svm} />
                   </Box>
                 </Box>
               </CSSTransition>
@@ -177,7 +234,11 @@ const Deteksi = () => {
                         </Grid>
                         <Grid item xs={6}>
                           <Box style={{ textAlign: 'right' }}>
-                            <Radio />
+                            <Radio
+                              value="unigram"
+                              checked={rfFeatureExtraction === 'unigram'}
+                              onChange={onChangeRfRadio}
+                            />
                           </Box>
                         </Grid>
                       </Grid>
@@ -188,7 +249,11 @@ const Deteksi = () => {
                           </Grid>
                           <Grid item xs={6}>
                             <Box style={{ textAlign: 'right' }}>
-                              <Radio value={false} />
+                              <Radio
+                                value="bigram"
+                                checked={rfFeatureExtraction === 'bigram'}
+                                onChange={onChangeRfRadio}
+                              />
                             </Box>
                           </Grid>
                         </Grid>
@@ -200,7 +265,11 @@ const Deteksi = () => {
                           </Grid>
                           <Grid item xs={6}>
                             <Box style={{ textAlign: 'right' }}>
-                              <Radio value={false} />
+                              <Radio
+                                value="trigram"
+                                checked={rfFeatureExtraction === 'trigram'}
+                                onChange={onChangeRfRadio}
+                              />
                             </Box>
                           </Grid>
                         </Grid>
@@ -222,7 +291,7 @@ const Deteksi = () => {
                         </Grid>
                       </Grid>
                     </Box>
-                    <ModelResult />
+                    <ModelResult result={result.rf} />
                   </Box>
                 </Box>
               </CSSTransition>
@@ -247,7 +316,11 @@ const Deteksi = () => {
                         </Grid>
                         <Grid item xs={6}>
                           <Box style={{ textAlign: 'right' }}>
-                            <Radio />
+                            <Radio
+                              value="unigram"
+                              checked={vcFeatureExtraction === 'unigram'}
+                              onChange={onChangeVcRadio}
+                            />
                           </Box>
                         </Grid>
                       </Grid>
@@ -258,7 +331,11 @@ const Deteksi = () => {
                           </Grid>
                           <Grid item xs={6}>
                             <Box style={{ textAlign: 'right' }}>
-                              <Radio value={false} />
+                              <Radio
+                                value="bigram"
+                                checked={vcFeatureExtraction === 'bigram'}
+                                onChange={onChangeVcRadio}
+                              />
                             </Box>
                           </Grid>
                         </Grid>
@@ -270,7 +347,11 @@ const Deteksi = () => {
                           </Grid>
                           <Grid item xs={6}>
                             <Box style={{ textAlign: 'right' }}>
-                              <Radio value={false} />
+                              <Radio
+                                value="trigram"
+                                checked={vcFeatureExtraction === 'trigram'}
+                                onChange={onChangeVcRadio}
+                              />
                             </Box>
                           </Grid>
                         </Grid>
@@ -292,7 +373,7 @@ const Deteksi = () => {
                         </Grid>
                       </Grid>
                     </Box>
-                    <ModelResult />
+                    <ModelResult result={result.vc} />
                   </Box>
                 </Box>
               </CSSTransition>
