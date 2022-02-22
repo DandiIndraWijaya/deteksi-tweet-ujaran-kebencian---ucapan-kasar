@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Box, Typography, Grid } from '@material-ui/core';
+import { Container, Box, Typography, Grid, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import Layout from '@components/Layout';
 import { CSSTransition } from 'react-transition-group';
@@ -10,28 +10,27 @@ import Navbar from '@components/Navbar';
 const useStyles = makeStyles((theme) => ({
   researchTitle: {
     color: theme.palette.primary.main,
-    fontSize: 26,
-    fontWeight: 'bold',
+    fontSize: 22,
+    fontWeight: 'semibold',
     textAlign: 'center',
+    marginTop: 30,
   },
-  title: {
-    color: theme.palette.primary.main,
-  },
-  subtitle: {
-    color: theme.palette.text.secondary,
-  },
-  img: {
-    width: '65%',
+  unnesLogo: {
+    width: '10%',
     borderRadius: 100,
-    height: 200,
   },
   card: {
     boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
     padding: 20,
-    cursor: 'pointer',
     borderRadius: 8,
-    height: 400,
+  },
+  btn: {
+    backgroundColor: theme.palette.primary.main,
+    boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
+    color: '#ffff',
+    textTransform: 'none',
     '&:hover': {
+      backgroundColor: theme.palette.primary.main,
       boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2)',
     },
   },
@@ -50,48 +49,55 @@ const Home = () => {
 
   return (
     <Layout>
-      <Navbar />
+      {/* <Navbar /> */}
       <Container>
-        <Box mt={6}>
-          {/* <Typography className={classes.researchTitle}>Deteksi Tweet Ujaran Kebencian dan Ucapan Kasar Berbahasa Indonesia Menggunakan Support Vector Machine dan Random Forest dengan Teknik Voting Classifier</Typography> */}
-          <Grid container alignItems="flex-start" spacing={3}>
-            <Grid item xs={6}>
-              <CSSTransition
-                in={transition1}
-                timeout={1500}
-                unmountOnExit
-                classNames="animate__animated animate__bounce animate__slower"
-              >
-                <Link href="/dataset">
-                  <Box className={classes.card}>
-                    <center>
-                      <Typography variant="h3" className={classes.title}>Dataset</Typography>
-                      <img className={classes.img} src="/assets/dataset_illus.png" alt="" />
-                      <Typography className={classes.subtitle}>Melihat dataset Tweet Ujaran Kebencian dan Ucapan Kasar Berbahasa Indonesia yang dipakai untuk pelatihan dan pengujian model</Typography>
-                    </center>
-                  </Box>
+        <Box mt={4}>
+          <CSSTransition
+            in={transition1}
+            timeout={1500}
+            unmountOnExit
+            classNames="animate__animated animate__bounce animate__slower"
+          >
+            <Box>
+              <Box>
+                <center><img className={classes.unnesLogo} src="/assets/logo-unnes.png" alt="" /></center>
+              </Box>
+              <Box className={classes.card}>
+                <center>
+                  <Typography>Skripsi disusun oleh:</Typography>
+                  <Typography>Dandi Indra Wijaya, 4611418013</Typography>
+                </center>
+                <Box mt={3}>
+                  <Typography className={classes.researchTitle}>
+                    Deteksi Tweet Ujaran Kebencian dan Ucapan Kasar Berbahasa Indonesia Menggunakan Random Forest dan Support Vector Machine dengan Teknik Voting Classifier
+                  </Typography>
+                </Box>
+                <Box mt={3}>
+                  <center>
+                    <Typography>Dosen Pembimbing:</Typography>
+                    <Typography>Riza Arifudin S.Pd., M.Cs.</Typography>
+                    <Typography> NIP: 198005252005011001</Typography>
+                  </center>
+                </Box>
+              </Box>
+            </Box>
+          </CSSTransition>
+          <CSSTransition
+            in={transition2}
+            timeout={1500}
+            unmountOnExit
+            classNames="animate__animated animate__bounce animate__slower"
+          >
+            <Box mt={3}>
+              <center>
+                <Link href="/menu">
+                  <Button className={classes.btn} type="contained">
+                    Menu
+                  </Button>
                 </Link>
-              </CSSTransition>
-            </Grid>
-            <Grid item xs={6}>
-              <CSSTransition
-                in={transition2}
-                timeout={1500}
-                unmountOnExit
-                classNames="animate__animated animate__bounce animate__slower"
-              >
-                <Link href="/deteksi">
-                  <Box className={classes.card}>
-                    <center>
-                      <Typography variant="h3" className={classes.title}>Deteksi</Typography>
-                      <img className={classes.img} src="/assets/ml_illus.jpg" alt="" />
-                      <Typography className={classes.subtitle}>Menguji kemampuan algoritma Support Vector Machine, Random Forest, dan Teknik Voting Classifier dalam mendeteksi Tweet Ujaran Kebencian dan Ucapan Kasar Berbahasa Indonesia</Typography>
-                    </center>
-                  </Box>
-                </Link>
-              </CSSTransition>
-            </Grid>
-          </Grid>
+              </center>
+            </Box>
+          </CSSTransition>
         </Box>
       </Container>
     </Layout>

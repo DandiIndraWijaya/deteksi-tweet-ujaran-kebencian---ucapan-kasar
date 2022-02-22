@@ -107,7 +107,7 @@ const Deteksi = (props) => {
   }, []);
 
   useEffect(() => {
-    if (modelResult?.data === undefined) return;
+    if (modelResult?.data === undefined || modelResult?.data === null) return;
     setResult(modelResult.data);
   }, [modelResult]);
 
