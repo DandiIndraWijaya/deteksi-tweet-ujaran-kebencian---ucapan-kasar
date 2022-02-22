@@ -15,6 +15,16 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     marginTop: 30,
   },
+  methodTitle: {
+    color: theme.palette.primary.main,
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  method: {
+    color: theme.palette.text.secondary,
+    marginTop: 20,
+  },
   unnesLogo: {
     width: '10%',
     borderRadius: 100,
@@ -39,12 +49,14 @@ const useStyles = makeStyles((theme) => ({
 const Home = () => {
   const [transition1, setTransition1] = useState(false);
   const [transition2, setTransition2] = useState(false);
+  const [transition3, setTransition3] = useState(false);
 
   const classes = useStyles();
 
   useEffect(() => {
     setTimeout(() => setTransition1(true), [500]);
     setTimeout(() => setTransition2(true), [1600]);
+    setTimeout(() => setTransition3(true), [3400]);
   }, []);
 
   return (
@@ -96,6 +108,22 @@ const Home = () => {
                   </Button>
                 </Link>
               </center>
+            </Box>
+          </CSSTransition>
+          <CSSTransition
+            in={transition3}
+            timeout={1500}
+            unmountOnExit
+            classNames="animate__animated animate__bounce animate__slower"
+          >
+            <Box mt={4} className={classes.card}>
+              <Typography className={classes.methodTitle}>Metode</Typography>
+              <Typography className={classes.method}>
+                Algoritma klasifikasi yang digunakan adalah Random Forest, Support Vector Machine, dan Voting Classifier. Terdapat 5 tahap preprocessing data yaitu Case Folding, Punctuation Removal, Tokenization, Stopword Removal, dan Stemming. Feature Extraction yang digunakan yaitu TF-IDF dan N-Gram. Data yang digunakan adalah dataset hate speech
+                berbahasa Indonesia tahun 2019 dari www.kaggle.com/ilhamfp31/indonesianabusive-and-hate-speech-twitter-text dengan total record sebanyak 13.169 dan terdiri
+                dari 12 label yang ditandai dengan label 1 dan 0. 1 berarti tweet tersebut termasuk
+                pada label tersebut sedangkan jika 0 maka tweet bukan termasuk label tersebut
+              </Typography>
             </Box>
           </CSSTransition>
         </Box>
