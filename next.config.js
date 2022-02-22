@@ -6,4 +6,6 @@ module.exports = withPWA({
     dest: 'public',
     runtimeCaching,
   },
+  env: {
+    mode: 'development' },
 });

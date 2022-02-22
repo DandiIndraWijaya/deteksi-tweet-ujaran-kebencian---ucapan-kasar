@@ -6,6 +6,8 @@ import { CSSTransition } from 'react-transition-group';
 import ModelResult from '@components/ModelResult';
 import 'animate.css';
 import NavbarBack from '@components/Navbar/NavbarBack';
+import { connect } from 'react-redux';
+import { getModelResult } from '@src/redux/actions/model';
 
 const useStyles = makeStyles((theme) => ({
   researchTitle: {
@@ -57,7 +59,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Deteksi = () => {
+const Deteksi = (props) => {
+  const { modelResult, getModelResult } = props;
   const [transition1, setTransition1] = useState(false);
   const [transition2, setTransition2] = useState(false);
   const [transition3, setTransition3] = useState(false);
@@ -67,30 +70,30 @@ const Deteksi = () => {
   const [vcFeatureExtraction, setVcFeatrueExtraction] = useState('unigram');
   const [result, setResult] = useState({
     svm: {
-      tfidf_unigram_acc: '80',
+      tfidf_unigram_acc: '',
       tfidf_bigram_acc: '',
       tfidf_trigram_acc: '',
-      tfidf_unigram_time: '05:40',
+      tfidf_unigram_time: '',
       tfidf_bigram_time: '',
       tfidf_trigram_time: '',
       updated_at: '',
     },
     rf: {
       tfidf_unigram_acc: '',
-      tfidf_bigram_acc: '90',
+      tfidf_bigram_acc: '',
       tfidf_trigram_acc: '',
       tfidf_unigram_time: '',
-      tfidf_bigram_time: '08:48',
+      tfidf_bigram_time: '',
       tfidf_trigram_time: '',
       updated_at: '',
     },
     vc: {
       tfidf_unigram_acc: '',
       tfidf_bigram_acc: '',
-      tfidf_trigram_acc: '96.90',
+      tfidf_trigram_acc: '',
       tfidf_unigram_time: '',
       tfidf_bigram_time: '',
-      tfidf_trigram_time: '10:19',
+      tfidf_trigram_time: '',
       updated_at: '',
     },
   });
@@ -100,7 +103,13 @@ const Deteksi = () => {
     setTimeout(() => setTransition1(true), [500]);
     setTimeout(() => setTransition2(true), [1600]);
     setTimeout(() => setTransition3(true), [2500]);
+    getModelResult();
   }, []);
+
+  useEffect(() => {
+    if (modelResult?.data === undefined) return;
+    setResult(modelResult.data);
+  }, [modelResult]);
 
   const onTrain = () => {
     setSvmLoading(true);
@@ -385,4 +394,13 @@ const Deteksi = () => {
   );
 };
 
-export default Deteksi;
+// map local variable to reducer
+const mapStoreToProps = (state) => ({
+  modelResult: state.model,
+});
+
+// map dispatch to reducer
+const mapDispatchToProps = (dispatch) => ({
+  getModelResult: (data, callback) => dispatch(getModelResult(data, callback)),
+});
+export default connect(mapStoreToProps, mapDispatchToProps)(Deteksi);

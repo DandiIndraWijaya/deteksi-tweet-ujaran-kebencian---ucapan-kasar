@@ -22,14 +22,14 @@ const ModelResult = (props) => {
 
   const formatAccuracy = (accuracy) => {
     if (accuracy) {
-      return `${accuracy}%`;
+      return `${Math.round(accuracy * 100) / 100}%`;
     }
     return '';
   };
 
   const fromatTime = (time) => {
     if (time) {
-      return `(${time})`;
+      return `(${time.substring(2, 7)})`;
     }
     return '';
   };
