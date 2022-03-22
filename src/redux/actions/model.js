@@ -27,3 +27,28 @@ export const getModelResult = (callback) => (dispatch) => {
       });
     });
 };
+
+export const POST_MODEL_RESULT = generatorAction('POST_MODEL_RESULT');
+export const postModelResult = (payload, callback) => (dispatch) => {
+  // initialize dispatcher
+  dispatch({ type: POST_MODEL_RESULT.begin });
+
+  // make get request
+  return services
+    .post(URL.MODEL, payload).then((res) => {
+      if (callback) callback(res);
+      dispatch({
+        type: POST_MODEL_RESULT.success,
+        payload: res.data,
+      });
+    })
+    // catch if failed
+    .catch((e) => {
+      if (callback) callback(e);
+      const error = e.response.data;
+      dispatch({
+        type: POST_MODEL_RESULT.fail,
+        payload: { error },
+      });
+    });
+};

@@ -1,4 +1,4 @@
-import { GET_MODEL_RESULT } from '../actions/model';
+import { GET_MODEL_RESULT, POST_MODEL_RESULT } from '../actions/model';
 
 // initial state
 const initialState = {
@@ -29,7 +29,27 @@ const model = (state = initialState, action) => {
         loading: false,
         error: action.payload.error,
       };
-
+      // begining
+    case POST_MODEL_RESULT.begin:
+      return {
+        ...state,
+        loading: true,
+      };
+      // success
+    case POST_MODEL_RESULT.success:
+      return {
+        ...state,
+        loading: false,
+        data: action.payload,
+        error: null,
+      };
+      // fail
+    case POST_MODEL_RESULT.fail:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+      };
     default:
       return state;
   }

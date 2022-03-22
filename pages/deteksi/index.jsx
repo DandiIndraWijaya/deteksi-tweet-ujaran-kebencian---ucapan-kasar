@@ -7,7 +7,7 @@ import ModelResult from '@components/ModelResult';
 import 'animate.css';
 import NavbarBack from '@components/Navbar/NavbarBack';
 import { connect } from 'react-redux';
-import { getModelResult } from '@src/redux/actions/model';
+import { getModelResult, postModelResult } from '@src/redux/actions/model';
 
 const useStyles = makeStyles((theme) => ({
   researchTitle: {
@@ -60,11 +60,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Deteksi = (props) => {
-  const { modelResult, getModelResult } = props;
+  const { modelResult, getModelResult, postModelResult } = props;
   const [transition1, setTransition1] = useState(false);
   const [transition2, setTransition2] = useState(false);
   const [transition3, setTransition3] = useState(false);
   const [svmLoading, setSvmLoading] = useState(false);
+  const [rfLoading, setRfLoading] = useState(false);
+  const [vcLoading, setVcLoading] = useState(false);
   const [svmFeatureExtraction, setSvmFeatureExtraction] = useState('unigram');
   const [rfFeatureExtraction, setRfFeatureExtraction] = useState('unigram');
   const [vcFeatureExtraction, setVcFeatrueExtraction] = useState('unigram');
@@ -103,17 +105,67 @@ const Deteksi = (props) => {
     setTimeout(() => setTransition1(true), [500]);
     setTimeout(() => setTransition2(true), [1600]);
     setTimeout(() => setTransition3(true), [2500]);
-    getModelResult();
+    // getModelResult();
   }, []);
 
-  useEffect(() => {
-    if (modelResult?.data === undefined || modelResult?.data === null) return;
-    setResult(modelResult.data);
-  }, [modelResult]);
-
-  const onTrain = () => {
+  const onTrainSvm = () => {
     setSvmLoading(true);
-    setTimeout(() => setSvmLoading(false), 2000);
+    postModelResult({
+      algoritma: 'vc',
+      'ekstraksi-fitur': svmFeatureExtraction,
+    }, (res) => {
+      setSvmLoading(false);
+      const { data } = res;
+      const newResult = {
+        ...result,
+        svm: {
+          ...result.svm,
+          [`${svmFeatureExtraction}_acc`]: data.svm[`${svmFeatureExtraction}_acc`],
+          [`${svmFeatureExtraction}_time`]: data.svm[`${svmFeatureExtraction}_time`],
+        },
+      };
+      setResult(newResult);
+    });
+  };
+
+  const onTrainRf = () => {
+    setRfLoading(true);
+    postModelResult({
+      algoritma: 'rf',
+      'ekstraksi-fitur': rfFeatureExtraction,
+    }, (res) => {
+      setRfLoading(false);
+      const { data } = res;
+      const newResult = {
+        ...result,
+        rf: {
+          ...result.rf,
+          [`${rfFeatureExtraction}_acc`]: data.rf[`${rfFeatureExtraction}_acc`],
+          [`${rfFeatureExtraction}_time`]: data.rf[`${rfFeatureExtraction}_time`],
+        },
+      };
+      setResult(newResult);
+    });
+  };
+
+  const onTrainVc = () => {
+    setVcLoading(true);
+    postModelResult({
+      algoritma: 'vc',
+      'ekstraksi-fitur': vcFeatureExtraction,
+    }, (res) => {
+      setVcLoading(false);
+      const { data } = res;
+      const newResult = {
+        ...result,
+        vc: {
+          ...result.vc,
+          [`${vcFeatureExtraction}_acc`]: data.vc[`${vcFeatureExtraction}_acc`],
+          [`${vcFeatureExtraction}_time`]: data.vc[`${vcFeatureExtraction}_time`],
+        },
+      };
+      setResult(newResult);
+    });
   };
 
   const onChangeSvmRadio = (e) => {
@@ -154,8 +206,8 @@ const Deteksi = (props) => {
                         <Grid item xs={6}>
                           <Box style={{ textAlign: 'right' }}>
                             <Radio
-                              value="unigram"
-                              checked={svmFeatureExtraction === 'unigram'}
+                              value="tfidf_unigram"
+                              checked={svmFeatureExtraction === 'tfidf_unigram'}
                               onChange={onChangeSvmRadio}
                             />
                           </Box>
@@ -169,8 +221,8 @@ const Deteksi = (props) => {
                           <Grid item xs={6}>
                             <Box style={{ textAlign: 'right' }}>
                               <Radio
-                                value="bigram"
-                                checked={svmFeatureExtraction === 'bigram'}
+                                value="tfidf_bigram"
+                                checked={svmFeatureExtraction === 'tfidf_bigram'}
                                 onChange={onChangeSvmRadio}
                               />
                             </Box>
@@ -185,8 +237,8 @@ const Deteksi = (props) => {
                           <Grid item xs={6}>
                             <Box style={{ textAlign: 'right' }}>
                               <Radio
-                                value="trigram"
-                                checked={svmFeatureExtraction === 'trigram'}
+                                value="tfidf_trigram"
+                                checked={svmFeatureExtraction === 'tfidf_trigram'}
                                 onChange={onChangeSvmRadio}
                               />
                             </Box>
@@ -195,7 +247,7 @@ const Deteksi = (props) => {
                       </Box>
                     </RadioGroup>
                     <Button
-                      onClick={() => onTrain()}
+                      onClick={() => onTrainSvm()}
                       className={classes.deteksiBtn}
                     >
                       {
@@ -244,8 +296,8 @@ const Deteksi = (props) => {
                         <Grid item xs={6}>
                           <Box style={{ textAlign: 'right' }}>
                             <Radio
-                              value="unigram"
-                              checked={rfFeatureExtraction === 'unigram'}
+                              value="tfidf_unigram"
+                              checked={rfFeatureExtraction === 'tfidf_unigram'}
                               onChange={onChangeRfRadio}
                             />
                           </Box>
@@ -259,8 +311,8 @@ const Deteksi = (props) => {
                           <Grid item xs={6}>
                             <Box style={{ textAlign: 'right' }}>
                               <Radio
-                                value="bigram"
-                                checked={rfFeatureExtraction === 'bigram'}
+                                value="tfidf_bigram"
+                                checked={rfFeatureExtraction === 'tfidf_bigram'}
                                 onChange={onChangeRfRadio}
                               />
                             </Box>
@@ -275,8 +327,8 @@ const Deteksi = (props) => {
                           <Grid item xs={6}>
                             <Box style={{ textAlign: 'right' }}>
                               <Radio
-                                value="trigram"
-                                checked={rfFeatureExtraction === 'trigram'}
+                                value="tfidf_trigram"
+                                checked={rfFeatureExtraction === 'tfidf_trigram'}
                                 onChange={onChangeRfRadio}
                               />
                             </Box>
@@ -284,7 +336,12 @@ const Deteksi = (props) => {
                         </Grid>
                       </Box>
                     </RadioGroup>
-                    <Button className={classes.deteksiBtn}>Latih Model</Button>
+                    <Button onClick={() => onTrainRf()} className={classes.deteksiBtn}>
+                      {
+                        rfLoading
+                          ? <CircularProgress size={24} className={classes.progressIcon} /> : 'Latih Model'
+                      }
+                    </Button>
                     <Box mt={2} mb={2}>
                       <Divider />
                     </Box>
@@ -326,8 +383,8 @@ const Deteksi = (props) => {
                         <Grid item xs={6}>
                           <Box style={{ textAlign: 'right' }}>
                             <Radio
-                              value="unigram"
-                              checked={vcFeatureExtraction === 'unigram'}
+                              value="tfidf_unigram"
+                              checked={vcFeatureExtraction === 'tfidf_unigram'}
                               onChange={onChangeVcRadio}
                             />
                           </Box>
@@ -341,8 +398,8 @@ const Deteksi = (props) => {
                           <Grid item xs={6}>
                             <Box style={{ textAlign: 'right' }}>
                               <Radio
-                                value="bigram"
-                                checked={vcFeatureExtraction === 'bigram'}
+                                value="tfidf_bigram"
+                                checked={vcFeatureExtraction === 'tfidf_bigram'}
                                 onChange={onChangeVcRadio}
                               />
                             </Box>
@@ -357,8 +414,8 @@ const Deteksi = (props) => {
                           <Grid item xs={6}>
                             <Box style={{ textAlign: 'right' }}>
                               <Radio
-                                value="trigram"
-                                checked={vcFeatureExtraction === 'trigram'}
+                                value="tfidf_trigram"
+                                checked={vcFeatureExtraction === 'tfidf_trigram'}
                                 onChange={onChangeVcRadio}
                               />
                             </Box>
@@ -366,7 +423,12 @@ const Deteksi = (props) => {
                         </Grid>
                       </Box>
                     </RadioGroup>
-                    <Button className={classes.deteksiBtn}>Latih Model</Button>
+                    <Button onClick={() => onTrainVc()} className={classes.deteksiBtn}>
+                      {
+                        vcLoading
+                          ? <CircularProgress size={24} className={classes.progressIcon} /> : 'Latih Model'
+                      }
+                    </Button>
                     <Box mt={2} mb={2}>
                       <Divider />
                     </Box>
@@ -401,6 +463,7 @@ const mapStoreToProps = (state) => ({
 
 // map dispatch to reducer
 const mapDispatchToProps = (dispatch) => ({
-  getModelResult: (data, callback) => dispatch(getModelResult(data, callback)),
+  getModelResult: (callback) => dispatch(getModelResult(callback)),
+  postModelResult: (payload, callback) => dispatch(postModelResult(payload, callback)),
 });
 export default connect(mapStoreToProps, mapDispatchToProps)(Deteksi);
