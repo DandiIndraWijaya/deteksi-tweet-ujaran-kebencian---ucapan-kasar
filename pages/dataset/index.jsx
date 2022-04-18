@@ -75,14 +75,14 @@ const Dataset = () => {
            datasetInfo !== undefined && datasetInfo !== null
            && (
            <Grid container spacing={4}>
-             <Grid item md={6}>
+             <Grid item md={12}>
                <Box>
                  <Typography className={classes.fileInfo}>Nama file:   {datasetInfo.name}</Typography>
                  <Typography className={classes.fileInfo}>Jumlah data: {dataset.length}</Typography>
                </Box>
                <DisplayData dataset={dataset} />
              </Grid>
-             <Grid item md={6}>
+             <Grid item md={12}>
                <Box>
                  <Typography className={classes.fileInfo}>Dataset dengan label yang diperbarui</Typography>
                  <Typography className={classes.fileInfo}>
