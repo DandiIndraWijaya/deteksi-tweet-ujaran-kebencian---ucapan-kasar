@@ -186,12 +186,12 @@ const Deteksi = (props) => {
         <NavbarBack currentPage="Deteksi" />
         <Box mt={6}>
           <Grid container alignItems="flex-start" spacing={3}>
-            <Grid item xs={4}>
+            <Grid item xs={12} md={4}>
               <CSSTransition
                 in={transition1}
                 timeout={1500}
                 unmountOnExit
-                classNames="animate__animated animate__bounce animate__slower"
+                classNames="animate__animated animate__fadeIn animate__slower"
               >
                 <Box className={classes.card}>
                   <center>
@@ -276,12 +276,12 @@ const Deteksi = (props) => {
               </CSSTransition>
             </Grid>
 
-            <Grid item xs={4}>
+            <Grid item xs={12} md={4}>
               <CSSTransition
                 in={transition2}
                 timeout={1500}
                 unmountOnExit
-                classNames="animate__animated animate__bounce animate__slower"
+                classNames="animate__animated animate__fadeIn animate__slower"
               >
                 <Box className={classes.card}>
                   <center>
@@ -363,12 +363,12 @@ const Deteksi = (props) => {
               </CSSTransition>
             </Grid>
 
-            <Grid item xs={4}>
+            <Grid item xs={12} md={4}>
               <CSSTransition
                 in={transition3}
                 timeout={1500}
                 unmountOnExit
-                classNames="animate__animated animate__bounce animate__slower"
+                classNames="animate__animated animate__fadeIn animate__slower"
               >
                 <Box className={classes.card}>
                   <center>

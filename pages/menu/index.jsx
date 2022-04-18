@@ -60,7 +60,7 @@ const Menu = () => {
                 in={transition1}
                 timeout={1500}
                 unmountOnExit
-                classNames="animate__animated animate__bounce animate__slower"
+                classNames="animate__animated animate__fadeIn animate__slower"
               >
                 <Link href="/dataset">
                   <Box className={classes.card}>
@@ -78,7 +78,7 @@ const Menu = () => {
                 in={transition2}
                 timeout={1500}
                 unmountOnExit
-                classNames="animate__animated animate__bounce animate__slower"
+                classNames="animate__animated animate__fadeIn animate__slower"
               >
                 <Link href="/deteksi">
                   <Box className={classes.card}>

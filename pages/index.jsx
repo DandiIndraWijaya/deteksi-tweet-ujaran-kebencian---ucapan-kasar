@@ -68,7 +68,7 @@ const Home = () => {
             in={transition1}
             timeout={1500}
             unmountOnExit
-            classNames="animate__animated animate__bounce animate__slower"
+            classNames="animate__animated animate__fadeIn animate__slower"
           >
             <Box>
               <Box>
@@ -98,7 +98,7 @@ const Home = () => {
             in={transition2}
             timeout={1500}
             unmountOnExit
-            classNames="animate__animated animate__bounce animate__slower"
+            classNames="animate__animated animate__fadeIn animate__slower"
           >
             <Box mt={3}>
               <center>
@@ -114,7 +114,7 @@ const Home = () => {
             in={transition3}
             timeout={1500}
             unmountOnExit
-            classNames="animate__animated animate__bounce animate__slower"
+            classNames="animate__animated animate__fadeIn animate__slower"
           >
             <Box mt={4} className={classes.card}>
               <Typography className={classes.methodTitle}>Metode</Typography>

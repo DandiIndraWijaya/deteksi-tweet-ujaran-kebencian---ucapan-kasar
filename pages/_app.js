@@ -7,6 +7,7 @@ import { StylesProvider } from '@material-ui/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { useRouter } from 'next/router';
 import '../styles/globals.css';
+import '../styles/table.css';
 import LoadingMain from '@components/General/LoadingMain';
 
 // Import Redux Library
