@@ -52,3 +52,26 @@ export const postModelResult = (payload, callback) => (dispatch) => {
       });
     });
 };
+
+export const POST_TEST_MODEL = generatorAction('POST_TEST_MODEL');
+export const postTestModel = (payload, callback) => (dispatch) => {
+  dispatch({ type: POST_TEST_MODEL.begin });
+
+  return services
+    .post(URL.TEST_MODEL, payload).then((res) => {
+      if (callback) callback(res);
+      dispatch({
+        type: POST_TEST_MODEL.success,
+        payload: res.data,
+      });
+    })
+    // catch if failed
+    .catch((e) => {
+      if (callback) callback(e);
+      const error = e.response.data;
+      dispatch({
+        type: POST_TEST_MODEL.fail,
+        payload: { error },
+      });
+    });
+};

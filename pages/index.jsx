@@ -5,7 +5,6 @@ import Layout from '@components/Layout';
 import { CSSTransition } from 'react-transition-group';
 import 'animate.css';
 import Link from 'next/link';
-import Navbar from '@components/Navbar';
 
 const useStyles = makeStyles((theme) => ({
   researchTitle: {

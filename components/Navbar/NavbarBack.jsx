@@ -16,6 +16,9 @@ const useStyles = makeStyles((theme) => ({
   },
   page: {
     fontSize: 18,
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: 10,
+    },
   },
 }));
 

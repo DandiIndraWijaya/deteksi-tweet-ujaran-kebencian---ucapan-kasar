@@ -32,10 +32,10 @@ const Dataset = () => {
       for (let i = 0; i < data.length; i += 1) {
         if (data[i].abusive === 1 && data[i].hs === 0) {
           data[i].label = 1;
-          data[i].keterangan = 'Ucapan Kasar';
+          data[i].keterangan = 'Ujaran Kebencian';
         } else if (data[i].abusive === 0 && data[i].hs === 1 || data[i].abusive === 1 && data[i].hs === 1) {
           data[i].label = 2;
-          data[i].keterangan = 'Ujaran Kebencian';
+          data[i].keterangan = 'Ucapan Kasar';
         } else {
           data[i].label = 0;
           data[i].keterangan = 'Netral';
@@ -87,8 +87,8 @@ const Dataset = () => {
                  <Typography className={classes.fileInfo}>Dataset dengan label yang diperbarui</Typography>
                  <Typography className={classes.fileInfo}>
                    <span style={{ color: '#1DA1F2' }}>Netral = 0</span>,
-                   <span style={{ color: 'orange' }}> Ucapan Kasar = 1</span>,
-                   <span style={{ color: 'red' }}> Ujaran Kebencian = 2</span>
+                   <span style={{ color: 'red' }}> Ujaran Kebencian = 1</span>,
+                   <span style={{ color: 'orange' }}> Ucapan Kasar = 2</span>
                  </Typography>
                </Box>
                <DisplayData type="modified" dataset={modifiedDataset} />

@@ -8,6 +8,7 @@ import 'animate.css';
 import NavbarBack from '@components/Navbar/NavbarBack';
 import { connect } from 'react-redux';
 import { getModelResult, postModelResult } from '@src/redux/actions/model';
+import Link from 'next/link';
 
 const useStyles = makeStyles((theme) => ({
   researchTitle: {
@@ -56,6 +57,16 @@ const useStyles = makeStyles((theme) => ({
   progressIcon: {
     color: '#ffff',
     fontSize: 3,
+  },
+  btnTestModel: {
+    backgroundColor: theme.palette.primary.main,
+    boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
+    color: '#ffff',
+    textTransform: 'none',
+    '&:hover': {
+      backgroundColor: theme.palette.primary.main,
+      boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2)',
+    },
   },
 }));
 
@@ -185,6 +196,11 @@ const Deteksi = (props) => {
       <Container>
         <NavbarBack currentPage="Deteksi" />
         <Box mt={6}>
+          <Box mb={3}>
+            <Link href="/test-model">
+              <Button className={classes.btnTestModel}>Test Model</Button>
+            </Link>
+          </Box>
           <Grid container alignItems="flex-start" spacing={3}>
             <Grid item xs={12} md={4}>
               <CSSTransition
