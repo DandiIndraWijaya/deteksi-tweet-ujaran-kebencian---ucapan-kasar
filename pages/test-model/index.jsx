@@ -95,7 +95,7 @@ const TestModel = (props) => {
   return (
     <Layout>
       <Container>
-        <NavbarBack currentPage="Test Model" />
+        <NavbarBack currentPage="Deteksi Tweet" />
         <Box mb={6} />
         <Box className={classes.formContainer}>
           <form onSubmit={onSubmit}>
