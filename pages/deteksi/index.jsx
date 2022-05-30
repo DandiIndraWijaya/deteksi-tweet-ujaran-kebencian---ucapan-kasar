@@ -198,7 +198,7 @@ const Deteksi = (props) => {
         <Box mt={6}>
           <Box mb={3}>
             <Link href="/test-model">
-              <Button className={classes.btnTestModel}>Test Model</Button>
+              <Button className={classes.btnTestModel}>Deteksi Tweet</Button>
             </Link>
           </Box>
           <Grid container alignItems="flex-start" spacing={3}>

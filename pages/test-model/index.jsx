@@ -6,6 +6,7 @@ import { Container, Box, TextField, Select, MenuItem, InputLabel, FormControl, B
 import { makeStyles } from '@material-ui/styles';
 import { connect } from 'react-redux';
 import { postTestModel } from '@src/redux/actions/model';
+import { useRouter } from 'next/router';
 
 const useStyles = makeStyles((theme) => ({
   formContainer: {
@@ -33,10 +34,21 @@ const useStyles = makeStyles((theme) => ({
     color: '#ffff',
     fontSize: 3,
   },
+  btnLatihModel: {
+    backgroundColor: 'red',
+    boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
+    color: '#ffff',
+    textTransform: 'none',
+    '&:hover': {
+      backgroundColor: 'red',
+      boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2)',
+    },
+  },
 }));
 
 const TestModel = (props) => {
   const classes = useStyles();
+  const router = useRouter();
   const { postTestModel } = props;
   const [algoritma, setAlgoritma] = useState('rf');
   const [ekstraksiFitur, setEkstraksiFitur] = useState('tfidf_unigram');
@@ -68,10 +80,14 @@ const TestModel = (props) => {
     setIsLoading(true);
     postTestModel(payload, (res) => {
       setIsLoading(false);
-      if (res?.response?.status === 500 && res?.response?.status !== undefined) {
-        setError('Model Dengan Algoritma dan Ekstraksi Fitur yang dipilih belum ada. Anda perlu melatih terlebih dahulu!');
-        return;
+      console.log(res);
+      if (res?.response?.status !== undefined) {
+        if (res?.response?.status === 500 && res?.response?.status !== undefined) {
+          setError('Model Dengan Algoritma dan Ekstraksi Fitur yang dipilih belum ada. Anda perlu melatih terlebih dahulu!');
+          return;
+        }
       }
+
       const { data } = res;
       setResult(data);
     });
@@ -104,7 +120,7 @@ const TestModel = (props) => {
                 >
                   <MenuItem value="rf">Random Forest</MenuItem>
                   <MenuItem value="svm">Support Vector Machine</MenuItem>
-                  <MenuItem value="vt">Voting Classifier</MenuItem>
+                  <MenuItem value="vc">Voting Classifier</MenuItem>
                 </Select>
               </FormControl>
             </Box>
@@ -141,13 +157,14 @@ const TestModel = (props) => {
            result !== null
            && (
            <Box mt={3}>
+             <Typography style={{ fontSize: 16, fontWeight: 'bold' }}>Hasil: </Typography>
              <Typography
                variant="h6"
                style={{ color: result.jenis_tweet === 'Tweet Netral' ? '#1DA1F2'
                  : result.jenis_tweet === 'Tweet Ujaran Kebencian' ? 'red' : 'orange',
                }}
              >
-               Hasil: {result.jenis_tweet}
+               {result.jenis_tweet}
              </Typography>
            </Box>
            )
@@ -162,6 +179,7 @@ const TestModel = (props) => {
              >
                {error}
              </Typography>
+             <Button className={classes.btnLatihModel} onClick={() => router.back()}>Latih Model</Button>
            </Box>
            )
          }
