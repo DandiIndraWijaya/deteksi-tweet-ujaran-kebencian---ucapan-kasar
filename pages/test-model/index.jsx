@@ -80,7 +80,6 @@ const TestModel = (props) => {
     setIsLoading(true);
     postTestModel(payload, (res) => {
       setIsLoading(false);
-      console.log(res);
       if (res?.response?.status !== undefined) {
         if (res?.response?.status === 500 && res?.response?.status !== undefined) {
           setError('Model Dengan Algoritma dan Ekstraksi Fitur yang dipilih belum ada. Anda perlu melatih terlebih dahulu!');
