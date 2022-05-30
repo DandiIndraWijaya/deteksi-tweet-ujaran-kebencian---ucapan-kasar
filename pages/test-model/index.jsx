@@ -41,21 +41,25 @@ const TestModel = (props) => {
   const [algoritma, setAlgoritma] = useState('rf');
   const [ekstraksiFitur, setEkstraksiFitur] = useState('tfidf_unigram');
   const [result, setResult] = useState(null);
+  const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const onChangeAlgoritma = (event) => {
     setResult(null);
+    setError(null);
     setAlgoritma(event.target.value);
   };
 
   const onChangeEkstraksiFitur = (event) => {
     setResult(null);
+    setError(null);
     setEkstraksiFitur(event.target.value);
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
     setResult(null);
+    setError(null);
     const payload = {
       tweet: e.target.elements.tweet.value,
       algoritma: e.target.elements.algoritma.value,
@@ -64,6 +68,10 @@ const TestModel = (props) => {
     setIsLoading(true);
     postTestModel(payload, (res) => {
       setIsLoading(false);
+      if (res?.response?.status === 500 && res?.response?.status !== undefined) {
+        setError('Model Dengan Algoritma dan Ekstraksi Fitur yang dipilih belum ada. Anda perlu melatih terlebih dahulu!');
+        return;
+      }
       const { data } = res;
       setResult(data);
     });
@@ -81,6 +89,7 @@ const TestModel = (props) => {
               name="tweet"
               className={classes.textField}
               placeholder="Input Tweet"
+              required
             />
             <Box mt={3}>
               <FormControl fullWidth>
@@ -139,6 +148,19 @@ const TestModel = (props) => {
                }}
              >
                Hasil: {result.jenis_tweet}
+             </Typography>
+           </Box>
+           )
+         }
+          {
+           error !== null
+           && (
+           <Box mt={3}>
+             <Typography
+               variant="h6"
+               style={{ color: 'red' }}
+             >
+               {error}
              </Typography>
            </Box>
            )
